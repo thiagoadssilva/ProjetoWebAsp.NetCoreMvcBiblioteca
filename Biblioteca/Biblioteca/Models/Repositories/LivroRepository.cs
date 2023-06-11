@@ -22,6 +22,12 @@ namespace Biblioteca.Models.Repositories
             ContextDataFake.Livros.Add(livro);
         }
 
+        public void Excluir(string id)
+        {
+            var objPesquisa = PesquisarPorId(id);
+            ContextDataFake.Livros.Remove(objPesquisa);
+        }
+
         public List<LivroDto> Listar()
         {
             var livros = ContextDataFake.Livros;

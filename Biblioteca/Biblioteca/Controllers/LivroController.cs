@@ -85,5 +85,45 @@ namespace Biblioteca.Controllers
                 throw ex;
             }
         }
+
+        public IActionResult Details(string? id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            var livro = _service.PesquisarPorId(id);
+
+            if (livro == null)
+            {
+                return NotFound();
+            }
+
+            return View(livro);
+        }
+
+        public IActionResult Delete(string? id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            var livro = _service.PesquisarPorId(id);
+
+            if (livro == null)
+            {
+                return NotFound();
+            }
+
+            return View(livro);
+        }
+
+        [HttpPost]
+        public IActionResult Delete([Bind("Id", "Nome", "Autor", "Editora")] LivroDto livroDto) {
+            _service.Excluir(livroDto.Id);
+            return RedirectToAction("Listar");
+        }
     }
 }
