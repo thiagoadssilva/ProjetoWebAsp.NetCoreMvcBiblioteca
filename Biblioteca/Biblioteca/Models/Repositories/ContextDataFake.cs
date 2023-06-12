@@ -1,30 +1,79 @@
-﻿using Biblioteca.Models.Dtos;
+﻿using Biblioteca.Models.Contracts.Contexts;
+using Biblioteca.Models.Dtos;
 
 namespace Biblioteca.Models.Repositories
 {
-    public static class ContextDataFake // Static = Classe não vai ser instanciada
+    public class ContextDataFake : IContextData
     {
-        public static List<LivroDto> Livros;
+        private readonly DbContexto _dbContexto;
 
-        static ContextDataFake()
+        public ContextDataFake(DbContexto dbContexto)
         {
-            Livros = new List<LivroDto>();
-            InitializeData();
+            _dbContexto = dbContexto;
         }
 
-        private static void InitializeData()
+        public void AtualizarLivro(LivroDto livro)
         {
-            var livro = new LivroDto("Livro 01", "Autor 01", "Editora 01");
-            Livros.Add(livro);
+            var objPesquisa = PesquisarLivroPorId(livro.Id);
+            _dbContexto.Remove(objPesquisa);
+            _dbContexto.SaveChanges();
 
-            livro = new LivroDto("Livro 02", "Autor 02", "Editora 02");
-            Livros.Add(livro);
+            objPesquisa.Nome = livro.Nome;
+            objPesquisa.Editora = livro.Editora;
+            objPesquisa.Autor = livro.Autor;
 
-            livro = new LivroDto("Livro 03", "Autor 03", "Editora 03");
-            Livros.Add(livro);
+            CadastrarLivro(objPesquisa);
+        }
 
-            livro = new LivroDto("Livro 03", "Autor 03", "Editora 03");
-            Livros.Add(livro);
+        public void CadastrarLivro(LivroDto livro)
+        {
+            try
+            {
+                _dbContexto.Add(livro);
+                _dbContexto.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ExcluirLivro(string id)
+        {
+            try
+            {
+                var objPesquisa = PesquisarLivroPorId(id);
+                _dbContexto.Remove(objPesquisa);
+                _dbContexto.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<LivroDto> ListarLivro()
+        {
+            try
+            {
+                return _dbContexto.livroDtos.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public LivroDto PesquisarLivroPorId(string id)
+        {
+            try
+            {
+                return _dbContexto.livroDtos.FirstOrDefault(p => p.Id == id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
