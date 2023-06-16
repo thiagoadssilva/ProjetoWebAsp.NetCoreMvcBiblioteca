@@ -1,4 +1,4 @@
-﻿using Biblioteca.Models.Repositories;
+﻿using Biblioteca.Models.Entidades;
 
 namespace Biblioteca.Models.Dtos
 {

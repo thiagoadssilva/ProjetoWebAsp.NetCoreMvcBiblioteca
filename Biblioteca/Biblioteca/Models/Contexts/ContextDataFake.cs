@@ -1,7 +1,7 @@
 ﻿using Biblioteca.Models.Contracts.Contexts;
 using Biblioteca.Models.Dtos;
 
-namespace Biblioteca.Models.Repositories
+namespace Biblioteca.Models.Contexts
 {
     public class ContextDataFake : IContextData
     {

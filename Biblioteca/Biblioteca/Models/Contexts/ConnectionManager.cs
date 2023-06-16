@@ -1,7 +1,7 @@
 ﻿using Biblioteca.Models.Contracts.Repositories;
 using MySqlConnector;
 
-namespace Biblioteca.Models.Repositories
+namespace Biblioteca.Models.Contexts
 {
     public class ConnectionManager : IConnectionManager
     {

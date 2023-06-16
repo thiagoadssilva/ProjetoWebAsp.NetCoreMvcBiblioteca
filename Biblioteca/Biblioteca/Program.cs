@@ -1,3 +1,4 @@
+using Biblioteca.Models.Contexts;
 using Biblioteca.Models.Contracts.Contexts;
 using Biblioteca.Models.Contracts.Repositories;
 using Biblioteca.Models.Contracts.Services;
@@ -13,7 +14,8 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("biblioteca");
 builder.Services.AddDbContext<DbContexto>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-builder.Services.AddScoped<IContextData, ContextDataFake>();
+//builder.Services.AddScoped<IContextData, ContextDataFake>();
+builder.Services.AddScoped<IContextData, ContextDataMySql>();
 builder.Services.AddScoped<IConnectionManager, ConnectionManager>();
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
 builder.Services.AddScoped<ILivroService, LivroService>();

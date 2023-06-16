@@ -1,4 +1,4 @@
-﻿namespace Biblioteca.Models.Repositories
+﻿namespace Biblioteca.Models.Entidades
 {
     public abstract class EntidadeBase
     {
