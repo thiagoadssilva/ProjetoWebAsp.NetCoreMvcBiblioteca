@@ -3,11 +3,11 @@ using Biblioteca.Models.Dtos;
 
 namespace Biblioteca.Models.Contexts
 {
-    public class ContextDataFake : IContextData
+    public class ContextDataFake_lixo : IContextData
     {
         private readonly DbContexto _dbContexto;
 
-        public ContextDataFake(DbContexto dbContexto)
+        public ContextDataFake_lixo(DbContexto dbContexto)
         {
             _dbContexto = dbContexto;
         }

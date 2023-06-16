@@ -19,7 +19,29 @@ namespace Biblioteca.Models.Contexts
 
         public void AtualizarLivro(LivroDto livro)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _mySqlConnector.Open();
+
+                var query = SqlManager.GetSql(TSql.ATUALIZAR_LIVRO);
+                var command = new MySqlCommand(query, _mySqlConnector);
+
+                command.Parameters.Add("@Id", MySqlDbType.VarString).Value = livro.Id;
+                command.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = livro.Nome;
+                command.Parameters.Add("@Autor", MySqlDbType.VarChar).Value = livro.Autor;
+                command.Parameters.Add("@Editora", MySqlDbType.VarChar).Value = livro.Editora;
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_mySqlConnector.State == ConnectionState.Open)
+                    _mySqlConnector.Close();
+            }
         }
 
         public void CadastrarLivro(LivroDto livro)
@@ -31,10 +53,10 @@ namespace Biblioteca.Models.Contexts
                 var query = SqlManager.GetSql(TSql.CADASTRAR_LIVRO);
                 var command = new MySqlCommand(query, _mySqlConnector);
 
-                command.Parameters.AddWithValue("@Id", livro.Id);
-                command.Parameters.AddWithValue("@Nome", livro.Nome);
-                command.Parameters.AddWithValue("@Autor", livro.Autor);
-                command.Parameters.AddWithValue("@Editora", livro.Editora);
+                command.Parameters.Add("@Id", MySqlDbType.VarString).Value = livro.Id;
+                command.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = livro.Nome;
+                command.Parameters.Add("@Autor", MySqlDbType.VarChar).Value = livro.Autor;
+                command.Parameters.Add("@Editora", MySqlDbType.VarChar).Value = livro.Editora;
 
                 command.ExecuteNonQuery();
             }
@@ -51,7 +73,26 @@ namespace Biblioteca.Models.Contexts
 
         public void ExcluirLivro(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _mySqlConnector.Open();
+
+                var query = SqlManager.GetSql(TSql.EXCLUIR_LIVRO);
+                var command = new MySqlCommand(query, _mySqlConnector);
+
+                command.Parameters.Add("@Id", MySqlDbType.VarString).Value = id;
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_mySqlConnector.State == ConnectionState.Open)
+                    _mySqlConnector.Close();
+            }
         }
 
         public List<LivroDto> ListarLivro()
@@ -97,7 +138,41 @@ namespace Biblioteca.Models.Contexts
 
         public LivroDto PesquisarLivroPorId(string id)
         {
-            throw new NotImplementedException();
+            LivroDto livro = null;
+
+            try
+            {
+                _mySqlConnector.Open();
+
+                var query = SqlManager.GetSql(TSql.PESQUISAR_LIVRO);
+                var command = new MySqlCommand(query, _mySqlConnector);
+                command.Parameters.AddWithValue("@Id", id);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        livro = new LivroDto
+                        {
+                            Id = reader["Id"].ToString(),
+                            Nome = reader["Nome"].ToString(),
+                            Autor = reader["Autor"].ToString(),
+                            Editora = reader["Editora"].ToString()
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_mySqlConnector.State == ConnectionState.Open)
+                    _mySqlConnector.Close();
+            }
+
+            return livro;
         }
     }
 }
