@@ -15,7 +15,7 @@ var connectionString = builder.Configuration.GetConnectionString("biblioteca");
 builder.Services.AddDbContext<DbContexto>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 //builder.Services.AddScoped<IContextData, ContextDataFake>();
-builder.Services.AddScoped<IContextData, ContextDataMySql>();
+builder.Services.AddScoped<IContextData, Biblioteca.Models.Contexts.ContextDataMySql>();
 builder.Services.AddScoped<IConnectionManager, ConnectionManager>();
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
 builder.Services.AddScoped<ILivroService, LivroService>();

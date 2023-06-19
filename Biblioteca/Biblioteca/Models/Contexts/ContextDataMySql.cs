@@ -53,7 +53,7 @@ namespace Biblioteca.Models.Contexts
                 var query = SqlManager.GetSql(TSql.CADASTRAR_LIVRO);
                 var command = new MySqlCommand(query, _mySqlConnector);
 
-                command.Parameters.Add("@Id", MySqlDbType.VarString).Value = livro.Id;
+                command.Parameters.Add("@Id", MySqlDbType.VarChar).Value = livro.Id;
                 command.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = livro.Nome;
                 command.Parameters.Add("@Autor", MySqlDbType.VarChar).Value = livro.Autor;
                 command.Parameters.Add("@Editora", MySqlDbType.VarChar).Value = livro.Editora;
