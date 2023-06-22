@@ -7,6 +7,8 @@ namespace Biblioteca.Models.Dtos
         public string Nome { get; set; }
         public string Autor { get; set; }
         public string Editora { get; set; }
+        public int StatusLivroId { get; set; }
+
 
         public LivroDto()
         {
@@ -22,6 +24,7 @@ namespace Biblioteca.Models.Dtos
             Nome = nome;
             Autor = autor;
             Editora = editora;
+            StatusLivroId = 1;
         }
     }
 }
