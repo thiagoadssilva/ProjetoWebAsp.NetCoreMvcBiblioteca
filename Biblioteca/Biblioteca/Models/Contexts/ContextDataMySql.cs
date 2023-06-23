@@ -30,6 +30,7 @@ namespace Biblioteca.Models.Contexts
                 command.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = livro.Nome;
                 command.Parameters.Add("@Autor", MySqlDbType.VarChar).Value = livro.Autor;
                 command.Parameters.Add("@Editora", MySqlDbType.VarChar).Value = livro.Editora;
+                command.Parameters.Add("@StatusLivroId", MySqlDbType.VarChar).Value = livro.StatusLivroId;
 
                 command.ExecuteNonQuery();
             }
@@ -57,6 +58,7 @@ namespace Biblioteca.Models.Contexts
                 command.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = livro.Nome;
                 command.Parameters.Add("@Autor", MySqlDbType.VarChar).Value = livro.Autor;
                 command.Parameters.Add("@Editora", MySqlDbType.VarChar).Value = livro.Editora;
+                command.Parameters.Add("@StatusLivroId", MySqlDbType.Int64).Value = livro.StatusLivroId;
 
                 command.ExecuteNonQuery();
             }
