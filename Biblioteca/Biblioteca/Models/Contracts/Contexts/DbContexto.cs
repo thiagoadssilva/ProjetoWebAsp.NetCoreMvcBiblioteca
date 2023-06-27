@@ -1,4 +1,5 @@
 ﻿using Biblioteca.Models.Dtos;
+using Biblioteca.Models.Entidades;
 using Microsoft.EntityFrameworkCore;
 
 namespace Biblioteca.Models.Contracts.Contexts
@@ -10,6 +11,6 @@ namespace Biblioteca.Models.Contracts.Contexts
 
         }
 
-        public DbSet<LivroDto> livroDtos { get; set; }
+        public DbSet<Livro> livroDtos { get; set; }
     }
 }

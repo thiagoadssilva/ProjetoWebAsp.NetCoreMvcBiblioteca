@@ -1,6 +1,6 @@
 ﻿using Biblioteca.Models.Contracts.Contexts;
 using Biblioteca.Models.Contracts.Repositories;
-using Biblioteca.Models.Dtos;
+using Biblioteca.Models.Entidades;
 using MySqlConnector;
 
 namespace Biblioteca.Models.Repositories
@@ -14,12 +14,12 @@ namespace Biblioteca.Models.Repositories
             _mySqlConnector = connectionManager.GetConnection();
         }
 
-        public void AtualizarLivro(LivroDto livro)
+        public void AtualizarLivro(Livro livro)
         {
             throw new NotImplementedException();
         }
 
-        public void CadastrarLivro(LivroDto livro)
+        public void CadastrarLivro(Livro livro)
         {
             throw new NotImplementedException();
         }
@@ -29,12 +29,12 @@ namespace Biblioteca.Models.Repositories
             throw new NotImplementedException();
         }
 
-        public List<LivroDto> ListarLivro()
+        public List<Livro> ListarLivro()
         {
             throw new NotImplementedException();
         }
 
-        public LivroDto PesquisarLivroPorId(string id)
+        public Livro PesquisarLivroPorId(string id)
         {
             throw new NotImplementedException();
         }

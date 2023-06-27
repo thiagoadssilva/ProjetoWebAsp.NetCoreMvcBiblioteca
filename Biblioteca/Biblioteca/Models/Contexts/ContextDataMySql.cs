@@ -1,6 +1,7 @@
 ﻿using Biblioteca.Models.Contracts.Contexts;
 using Biblioteca.Models.Contracts.Repositories;
 using Biblioteca.Models.Dtos;
+using Biblioteca.Models.Entidades;
 using Biblioteca.Models.Enums;
 using Biblioteca.Models.Repositories;
 using MySqlConnector;
@@ -17,7 +18,7 @@ namespace Biblioteca.Models.Contexts
             _mySqlConnector = connectionManager.GetConnection();
         }
 
-        public void AtualizarLivro(LivroDto livro)
+        public void AtualizarLivro(Livro livro)
         {
             try
             {
@@ -30,7 +31,7 @@ namespace Biblioteca.Models.Contexts
                 command.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = livro.Nome;
                 command.Parameters.Add("@Autor", MySqlDbType.VarChar).Value = livro.Autor;
                 command.Parameters.Add("@Editora", MySqlDbType.VarChar).Value = livro.Editora;
-                command.Parameters.Add("@StatusLivroId", MySqlDbType.VarChar).Value = livro.StatusLivroId;
+                //command.Parameters.Add("@StatusLivroId", MySqlDbType.VarChar).Value = livro.StatusLivro;
 
                 command.ExecuteNonQuery();
             }
@@ -45,7 +46,7 @@ namespace Biblioteca.Models.Contexts
             }
         }
 
-        public void CadastrarLivro(LivroDto livro)
+        public void CadastrarLivro(Livro livro)
         {
             try
             {
@@ -58,7 +59,7 @@ namespace Biblioteca.Models.Contexts
                 command.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = livro.Nome;
                 command.Parameters.Add("@Autor", MySqlDbType.VarChar).Value = livro.Autor;
                 command.Parameters.Add("@Editora", MySqlDbType.VarChar).Value = livro.Editora;
-                command.Parameters.Add("@StatusLivroId", MySqlDbType.Int64).Value = livro.StatusLivroId;
+                command.Parameters.Add("@StatusLivroId", MySqlDbType.Int64).Value = livro.StatusLivro.GetHashCode();
 
                 command.ExecuteNonQuery();
             }
@@ -97,9 +98,9 @@ namespace Biblioteca.Models.Contexts
             }
         }
 
-        public List<LivroDto> ListarLivro()
+        public List<Livro> ListarLivro()
         {
-            List<LivroDto> livros = new List<LivroDto>();
+            List<Livro> livros = new List<Livro>();
             try
             {
 
@@ -112,7 +113,7 @@ namespace Biblioteca.Models.Contexts
                 {
                     while (reader.Read())
                     {
-                        var livro = new LivroDto
+                        var livro = new Livro
                         {
                             Id = reader["Id"].ToString(),
                             Nome = reader["Nome"].ToString(),
@@ -138,9 +139,9 @@ namespace Biblioteca.Models.Contexts
             return livros;
         }
 
-        public LivroDto PesquisarLivroPorId(string id)
+        public Livro PesquisarLivroPorId(string id)
         {
-            LivroDto livro = null;
+            Livro livro = null;
 
             try
             {
@@ -154,7 +155,7 @@ namespace Biblioteca.Models.Contexts
                 {
                     if (reader.Read())
                     {
-                        livro = new LivroDto
+                        livro = new Livro
                         {
                             Id = reader["Id"].ToString(),
                             Nome = reader["Nome"].ToString(),

@@ -1,5 +1,5 @@
 ﻿using Biblioteca.Models.Contracts.Contexts;
-using Biblioteca.Models.Dtos;
+using Biblioteca.Models.Entidades;
 
 namespace Biblioteca.Models.Repositories
 {
@@ -12,7 +12,7 @@ namespace Biblioteca.Models.Repositories
             _dbContexto = dbContexto;
         }
 
-        public void AtualizarLivro(LivroDto livro)
+        public void AtualizarLivro(Livro livro)
         {
             var objPesquisa = PesquisarLivroPorId(livro.Id);
             _dbContexto.Remove(objPesquisa);
@@ -25,7 +25,7 @@ namespace Biblioteca.Models.Repositories
             CadastrarLivro(objPesquisa);
         }
 
-        public void CadastrarLivro(LivroDto livro)
+        public void CadastrarLivro(Livro livro)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace Biblioteca.Models.Repositories
             }
         }
 
-        public List<LivroDto> ListarLivro()
+        public List<Livro> ListarLivro()
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Biblioteca.Models.Repositories
             }
         }
 
-        public LivroDto PesquisarLivroPorId(string id)
+        public Livro PesquisarLivroPorId(string id)
         {
             try
             {
