@@ -43,7 +43,7 @@ namespace Biblioteca.Controllers
         public IActionResult Create([Bind("Nome", "Autor", "Editora")] LivroDto livro) {
             try
             {
-                livro.StatusLivroId = 1;
+                //livro.StatusLivroId = 1;
                 _service.Cadastrar(livro);
                 return RedirectToAction("Listar");
             }

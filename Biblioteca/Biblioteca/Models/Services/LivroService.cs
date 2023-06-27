@@ -31,6 +31,7 @@ namespace Biblioteca.Models.Services
             try
             {
                 var objLivro = livro.ConverterParaEntidade();
+                objLivro.Cadastrar();
                 _livroRepository.Cadastrar(objLivro);
             }
             catch (Exception ex)

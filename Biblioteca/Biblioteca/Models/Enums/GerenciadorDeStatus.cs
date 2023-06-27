@@ -23,5 +23,23 @@ namespace Biblioteca.Models.Enums
             var status = statusLivroList.FirstOrDefault(p => p.ToString().Equals(nomePesquisa));
             return status;
         }
+
+        private static List<StatusCliente> statusClientList = new List<StatusCliente>
+        {
+            StatusCliente.ATIVO,
+            StatusCliente.INATIVO,
+            StatusCliente.SUSPENSO
+        };
+
+        public static StatusCliente PesquisarStatusDoClientePeloId(int id) {
+            var status = statusClientList.FirstOrDefault(c => c.GetHashCode().Equals(id));
+            return status;
+        }
+
+        public static StatusCliente PesquisarStatusDoClientePeloNome(string nome) {
+            var nomePesquisa = nome.ToUpper().Replace("", "_");
+            var status = statusClientList.FirstOrDefault(p => p.ToString().Equals(nomePesquisa));
+            return status;
+        }
     }
 }
