@@ -14,7 +14,17 @@ namespace Biblioteca.Models.Repositories
             _mySqlConnector = connectionManager.GetConnection();
         }
 
+        public void AtualizarCliente(Cliente cliente)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AtualizarLivro(Livro livro)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CadastrarCliente(Cliente cliente)
         {
             throw new NotImplementedException();
         }
@@ -24,12 +34,27 @@ namespace Biblioteca.Models.Repositories
             throw new NotImplementedException();
         }
 
+        public void ExcluirCliente(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ExcluirLivro(string id)
         {
             throw new NotImplementedException();
         }
 
+        public List<Cliente> ListarCliente()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Livro> ListarLivro()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Cliente PesquisarClientePorId(string id)
         {
             throw new NotImplementedException();
         }

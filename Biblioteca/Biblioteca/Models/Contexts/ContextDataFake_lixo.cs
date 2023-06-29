@@ -12,6 +12,11 @@ namespace Biblioteca.Models.Contexts
             _dbContexto = dbContexto;
         }
 
+        public void AtualizarCliente(Cliente cliente)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AtualizarLivro(Livro livro)
         {
             var objPesquisa = PesquisarLivroPorId(livro.Id);
@@ -25,6 +30,11 @@ namespace Biblioteca.Models.Contexts
             CadastrarLivro(objPesquisa);
         }
 
+        public void CadastrarCliente(Cliente cliente)
+        {
+            throw new NotImplementedException();
+        }
+
         public void CadastrarLivro(Livro livro)
         {
             try
@@ -36,6 +46,11 @@ namespace Biblioteca.Models.Contexts
             {
                 throw ex;
             }
+        }
+
+        public void ExcluirCliente(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public void ExcluirLivro(string id)
@@ -52,6 +67,11 @@ namespace Biblioteca.Models.Contexts
             }
         }
 
+        public List<Cliente> ListarCliente()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Livro> ListarLivro()
         {
             try
@@ -62,6 +82,11 @@ namespace Biblioteca.Models.Contexts
             {
                 throw ex;
             }
+        }
+
+        public Cliente PesquisarClientePorId(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public Livro PesquisarLivroPorId(string id)

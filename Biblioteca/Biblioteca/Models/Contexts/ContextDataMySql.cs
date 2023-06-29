@@ -18,6 +18,34 @@ namespace Biblioteca.Models.Contexts
             _mySqlConnector = connectionManager.GetConnection();
         }
 
+        public void AtualizarCliente(Cliente cliente)
+        {
+            try
+            {
+                _mySqlConnector.Open();
+
+                var query = SqlManager.GetSql(TSql.ATUALIZAR_CLIENTE);
+                var command = new MySqlCommand(query, _mySqlConnector);
+
+                command.Parameters.Add("@Id", MySqlDbType.VarString).Value = cliente.Id;
+                command.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = cliente.Nome;
+                command.Parameters.Add("@Email", MySqlDbType.VarChar).Value = cliente.Email;
+                command.Parameters.Add("@Fone", MySqlDbType.VarChar).Value = cliente.Fone;
+                //command.Parameters.Add("@StatusLivroId", MySqlDbType.VarChar).Value = livro.StatusLivro;
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_mySqlConnector.State == ConnectionState.Open)
+                    _mySqlConnector.Close();
+            }
+        }
+
         public void AtualizarLivro(Livro livro)
         {
             try
@@ -32,6 +60,35 @@ namespace Biblioteca.Models.Contexts
                 command.Parameters.Add("@Autor", MySqlDbType.VarChar).Value = livro.Autor;
                 command.Parameters.Add("@Editora", MySqlDbType.VarChar).Value = livro.Editora;
                 //command.Parameters.Add("@StatusLivroId", MySqlDbType.VarChar).Value = livro.StatusLivro;
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_mySqlConnector.State == ConnectionState.Open)
+                    _mySqlConnector.Close();
+            }
+        }
+
+        public void CadastrarCliente(Cliente cliente)
+        {
+            try
+            {
+                _mySqlConnector.Open();
+
+                var query = SqlManager.GetSql(TSql.CADASTRAR_CLIENTE);
+                var command = new MySqlCommand(query, _mySqlConnector);
+
+                command.Parameters.Add("@Id", MySqlDbType.VarChar).Value = cliente.Id;
+                command.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = cliente.Nome;
+                command.Parameters.Add("@Email", MySqlDbType.VarChar).Value = cliente.Email;
+                command.Parameters.Add("@Fone", MySqlDbType.VarChar).Value = cliente.Fone;
+                command.Parameters.Add("@Cpf", MySqlDbType.VarChar).Value = cliente.CPF;
+                command.Parameters.Add("@StatusClienteId", MySqlDbType.Int64).Value = cliente.StatusCliente.GetHashCode();
 
                 command.ExecuteNonQuery();
             }
@@ -74,6 +131,30 @@ namespace Biblioteca.Models.Contexts
             }
         }
 
+        public void ExcluirCliente(string id)
+        {
+            try
+            {
+                _mySqlConnector.Open();
+
+                var query = SqlManager.GetSql(TSql.EXCLUIR_CLIENTE);
+                var command = new MySqlCommand(query, _mySqlConnector);
+
+                command.Parameters.Add("@Id", MySqlDbType.VarString).Value = id;
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_mySqlConnector.State == ConnectionState.Open)
+                    _mySqlConnector.Close();
+            }
+        }
+
         public void ExcluirLivro(string id)
         {
             try
@@ -96,6 +177,49 @@ namespace Biblioteca.Models.Contexts
                 if (_mySqlConnector.State == ConnectionState.Open)
                     _mySqlConnector.Close();
             }
+        }
+
+        public List<Cliente> ListarCliente()
+        {
+            List<Cliente> clientes = new List<Cliente>();
+            try
+            {
+
+                _mySqlConnector.Open();
+
+                var query = SqlManager.GetSql(TSql.LISTAR_CLIENTE);
+                var command = new MySqlCommand(query, _mySqlConnector);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var cliente = new Cliente
+                        {
+                            Id = reader["Id"].ToString(),
+                            Nome = reader["Nome"].ToString(),
+                            CPF = reader["CPF"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Fone = reader["Fone"].ToString(),
+                            StatusClienteId = reader["StatusClienteId"].GetHashCode()
+                        };
+
+                        clientes.Add(cliente);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_mySqlConnector.State == ConnectionState.Open)
+                    _mySqlConnector.Close();
+            }
+
+            return clientes;
         }
 
         public List<Livro> ListarLivro()
@@ -137,6 +261,47 @@ namespace Biblioteca.Models.Contexts
             }
 
             return livros;
+        }
+
+        public Cliente PesquisarClientePorId(string id)
+        {
+            Cliente cliente = null;
+
+            try
+            {
+                _mySqlConnector.Open();
+
+                var query = SqlManager.GetSql(TSql.PESQUISAR_CLIENTE);
+                var command = new MySqlCommand(query, _mySqlConnector);
+                command.Parameters.AddWithValue("@Id", id);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        cliente = new Cliente
+                        {
+                            Id = reader["Id"].ToString(),
+                            Nome = reader["Nome"].ToString(),
+                            CPF = reader["CPF"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Fone = reader["Fone"].ToString(),
+                            StatusClienteId = reader["StatusClienteId"].GetHashCode()
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (_mySqlConnector.State == ConnectionState.Open)
+                    _mySqlConnector.Close();
+            }
+
+            return cliente;
         }
 
         public Livro PesquisarLivroPorId(string id)
