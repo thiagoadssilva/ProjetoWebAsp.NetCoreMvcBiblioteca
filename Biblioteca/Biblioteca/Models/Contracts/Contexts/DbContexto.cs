@@ -12,5 +12,7 @@ namespace Biblioteca.Models.Contracts.Contexts
         }
 
         public DbSet<Livro> livroDtos { get; set; }
+
+        public DbSet<Biblioteca.Models.Dtos.ClienteDto>? ClienteDto { get; set; }
     }
 }
